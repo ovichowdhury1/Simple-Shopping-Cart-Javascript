@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button onclick="handleProductChange('phone',false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="phone-value" type="text" class="form-control text-center" value="1">
+                           <button onclick="handleProductChange('phone',true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$<span id="phone-price">1219</span> </h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button onclick="handleProductChange('case',false)"class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="case-value" type="text" class="form-control text-center" value="1">
+                           <button   onclick="handleProductChange('case',true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$<span id="case-price">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5 >Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5 id="total-price">$1,278</h5>
+                        <h5 id="tax">$0</h5>
+                        <h5 id="grand-total">$1,278</h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script>
+         
+         function handleProductChange(product,isIncrease){
+              let caseValueNumber = getInput(product);
+              if(isIncrease == false && caseValueNumber>0) {
+                  caseValueNumber = caseValueNumber - 1;
+              }
+              if(isIncrease == true){
+               caseValueNumber = caseValueNumber + 1;
+              }
+                  
+              document.getElementById(product+'-value').value = caseValueNumber;
+             const casePrice = document.getElementById(product+'-price');
+              if(product =='case') {
+               casePrice.innerText = caseValueNumber*59;
+              }
+              if(product =='phone') {
+               casePrice.innerText = caseValueNumber*1219;
+              }
+              calculateTotal();
+         };
+         function calculateTotal(){
+            
+            const caseQuantityNumber = getInput('case');
+            const phoneQuantityNumber = getInput('phone');
+
+            
+            const total = phoneQuantityNumber*1219 + caseQuantityNumber*59;
+            
+           document.getElementById('total-price').innerText =  '$'+total;
+
+            const tax = Math.round(total*0.1);
+             
+            document.getElementById('tax').innerText =  '$'+tax;
+
+            document.getElementById('grand-total').innerText    = total + tax;
+
+         };
+         
+         function getInput(product){
+            const phoneQuantity = document.getElementById(product +'-value').value;
+            const phoneQuantityNumber = parseInt(phoneQuantity);
+            
+            return phoneQuantityNumber;
+         }
+
+         // document.getElementById('case-increase').addEventListener('click',function(){
+         //      const caseValue = document.getElementById('case-value').value;
+         //      let caseValueNumber = parseInt(caseValue);
+         //          caseValueNumber = caseValueNumber + 1;
+         //      document.getElementById('case-value').value = caseValueNumber;
+
+         //     const casePrice = document.getElementById('case-price');
+         //     const casePriceNumber = parseInt(casePrice.innerText);
+         //     casePrice.innerText = casePriceNumber*caseValueNumber;
+         // });
+         // document.getElementById("case-decrease").addEventListener('click',function() {
+         //    const caseValue = document.getElementById('case-value').value;
+         //      let caseValueNumber = parseInt(caseValue);
+         //          caseValueNumber = caseValueNumber - 1;
+         //      document.getElementById('case-value').value = caseValueNumber;
+         //     const casePrice = document.getElementById('case-price');
+         //     casePrice.innerText = caseValueNumber*59;
+         // });
+      </script>
+   </section>
+   
+</body>
+
+</html>
